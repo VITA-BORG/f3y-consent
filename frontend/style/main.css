@@ -1,0 +1,247 @@
+/*variables*/
+/*global things*/
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  overflow-x: hidden;
+  background-color: #41b3a3; }
+
+#loading-overlay {
+  z-index: 999;
+  background-color: #e6e6e6;
+  height: 100%;
+  width: 100%;
+  color: #e27d60;
+  text-align: center;
+  transition: all 0.2s fade;
+  position: absolute;
+  top: 0px;
+  right: 0px; }
+  #loading-overlay .fa-spinner {
+    font-size: 75px;
+    margin-top: 45%; }
+
+button {
+  font-family: "Montserrat", sans-serif;
+  padding: 2% 3% 2% 3%;
+  background-color: #e27d60;
+  border: 0px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold; }
+  button:hover {
+    background-color: #e9b8aa; }
+  button:disabled {
+    pointer-events: none;
+    opacity: 0.75; }
+
+#view-content {
+  background-color: #e6e6e6;
+  min-height: 100%; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold; }
+
+label {
+  font-weight: bold; }
+
+#preamble {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  font-weight: bold; }
+
+#logo, .dot-sep {
+  text-align: center;
+  padding-top: 1vh; }
+  #logo img, .dot-sep img {
+    max-width: 90%;
+    height: auto; }
+
+.dot-sep {
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  text-align: center; }
+  .dot-sep img {
+    width: 50%; }
+
+#institutions {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  padding-top: 3vh;
+  padding-bottom: 3vh; }
+  #institutions .school-logo {
+    display: inline-block;
+    margin-left: 2.5%;
+    margin-right: 2.5%; }
+    #institutions .school-logo img {
+      max-width: 130px;
+      max-height: 130px; }
+
+#roles {
+  font-size: 75%;
+  padding-bottom: 3vh; }
+  #roles .person .title {
+    font-weight: bold;
+    display: inline-block; }
+
+#study-id {
+  padding-bottom: 1vh;
+  font-size: 75%; }
+  #study-id label {
+    padding-right: 4%; }
+  #study-id #f3y-details {
+    display: inline-block;
+    padding-top: 3vh; }
+
+#form-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 125%;
+  text-align: center;
+  margin-top: 4vh;
+  margin-bottom: 5vh; }
+
+.form-section .section-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 110%;
+  padding-bottom: 2vh;
+  padding-top: 4vh; }
+
+.option-label {
+  padding-left: 1.5%;
+  padding-right: 4%;
+  font-weight: bold;
+  display: inline-block; }
+
+.consent-item {
+  padding-bottom: 4%; }
+  .consent-item .consent-prompt {
+    padding-bottom: 1.5%; }
+
+.form-content input, .form-content textarea {
+  margin: 0 .25rem;
+  min-width: 125px;
+  border: none;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: rgba(44, 44, 44, 0.6);
+  transition: border-color .5s ease-in-out;
+  outline-offset: 3px; }
+
+.form-content .form-item {
+  margin-bottom: 2%; }
+.form-content input {
+  border-radius: 5px;
+  padding: 1.5%; }
+.form-content input:required:valid {
+  border-left-color: rgba(23, 150, 17, 0.6); }
+.form-content input:invalid {
+  border-left-color: rgba(255, 0, 0, 0.6); }
+.form-content input:focus {
+  border-color: rgba(44, 44, 44, 0.6);
+  outline-style: none;
+  box-shadow: none; }
+.form-content input:invalid:focus {
+  border-left-color: rgba(255, 0, 0, 0.6);
+  outline-style: none;
+  box-shadow: none; }
+
+#consent-prompt {
+  margin-top: 4vh;
+  margin-bottom: 4vh; }
+
+#signature {
+  margin-top: 4vh;
+  margin-bottom: 4vh; }
+  #signature #signature-buttons {
+    margin-top: 1.5vh; }
+    #signature #signature-buttons button {
+      min-width: 30%; }
+  #signature #signature-prompt {
+    opacity: 0.8;
+    font-size: 75%;
+    padding-bottom: 7px;
+    font-style: italic; }
+  #signature .signature {
+    background-color: #fff;
+    border-radius: 5px; }
+
+#submit {
+  text-align: center;
+  padding-top: 7vh;
+  padding-bottom: 6vh; }
+  #submit button {
+    min-width: 75%; }
+
+#message {
+  text-align: center;
+  margin-top: 4vh; }
+  #message #download {
+    margin-top: 4vh; }
+  #message #interview-prompt a {
+    font-weight: bold;
+    font-size: 105%;
+    color: #e27d60; }
+    #message #interview-prompt a:hover {
+      color: #41b3a3; }
+
+#email-check {
+  padding-top: 1.5vh; }
+
+/*media queries*/
+/* Extra small devices (phones, 600px and down) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #logo img {
+    max-width: 50%; }
+
+  .dot-sep img {
+    max-height: 3.5vh;
+    width: auto; }
+
+  #institutions {
+    display: flex;
+    justify-content: space-between; }
+    #institutions .school-logo img {
+      max-width: 12vw;
+      max-height: 12vw; }
+
+  #signature #signature-buttons button {
+    min-width: 10%; }
+
+  #submit button {
+    min-width: 25vw; }
+
+  #consent-item {
+    padding-bottom: 2.5vh; }
+
+  button {
+    padding: 1%; }
+
+  #email-check {
+    padding-top: 3vh; }
+
+  input {
+    padding: 0.5% !important; }
+
+  #loading-overlay .fa-spinner {
+    margin-top: 20%; } }
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #view-content {
+    padding-left: 5%;
+    padding-right: 5%; }
+
+  #preamble {
+    font-size: 110%; }
+
+  #roles, #study-id {
+    font-size: 100%; } }
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+/*# sourceMappingURL=main.css.map */

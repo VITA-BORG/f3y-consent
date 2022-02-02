@@ -1,0 +1,363 @@
+/*variables*/
+$heading-font: 'Montserrat', sans-serif;
+$body-font: 'Open Sans', sans-serif;
+$fty-teal: #41b3a3;
+$fty-orange: #e27d60;
+$orange-lighter: #e9b8aa;
+
+/*global things*/
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: $body-font;
+  overflow-x: hidden;
+  background-color:$fty-teal;
+}
+
+#loading-overlay {
+  z-index: 999;
+  background-color: #e6e6e6;
+  height: 100%;
+  width: 100%;
+  color: $fty-orange;
+  text-align: center;
+  transition: all 0.2s fade;
+  .fa-spinner {
+    font-size: 75px;
+    margin-top: 45%;
+  }
+  position: absolute;
+  top: 0px;
+  right: 0px
+}
+
+button {
+  font-family: $heading-font;
+  padding: 2% 3% 2% 3%;
+  background-color: $fty-orange;
+  border: 0px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: $orange-lighter;
+  }
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.75;
+  }
+  font-weight: bold;
+}
+
+
+#view-content {
+    background-color: #e6e6e6;
+    min-height: 100%;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font;
+  font-weight: bold;
+}
+
+label {
+  font-weight: bold;
+}
+
+
+#preamble {
+  font-family: $heading-font;
+  text-align: center;
+  font-weight: bold;
+}
+
+#logo, .dot-sep {
+
+  text-align: center;
+  padding-top: 1vh;
+  img {
+    max-width: 90%;
+    height: auto;
+  }
+}
+
+.dot-sep {
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  text-align: center;
+  img {
+    width: 50%;
+  }
+}
+
+#institutions {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+
+  .school-logo {
+    display: inline-block;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+
+
+    img{
+      max-width: 130px;
+      max-height: 130px;
+    }
+  }
+
+}
+
+
+#roles {
+   font-size: 75%;
+  .person {
+    .title {
+      font-weight: bold;
+      display: inline-block;
+    }
+  }
+  padding-bottom: 3vh;
+}
+
+#study-id {
+  padding-bottom: 1vh;
+  font-size: 75%;
+
+  label {
+    padding-right: 4%;
+  }
+
+  #f3y-details {
+    display: inline-block;
+    padding-top: 3vh;
+  }
+
+}
+
+
+#form-title {
+  font-family: $heading-font;
+  font-weight: bold;
+  font-size: 125%;
+  text-align: center;
+  margin-top: 4vh;
+  margin-bottom: 5vh;;
+}
+
+.form-section {
+  .section-title {
+    font-family: $heading-font;
+    font-weight: bold;
+    font-size: 110%;
+    padding-bottom: 2vh;
+    padding-top: 4vh;
+  }
+}
+
+.option-label {
+  padding-left: 1.5%;
+  padding-right: 4%;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.consent-item {
+  padding-bottom: 4%;
+  .consent-prompt {
+    padding-bottom: 1.5%;
+  }
+}
+
+.form-content input, .form-content textarea {
+  margin: 0 .25rem;
+  min-width: 125px;
+  border: none;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: rgba(44,44,44,0.6);
+  transition: border-color .5s ease-in-out;
+  outline-offset: 3px;
+}
+
+
+.form-content {
+  .form-item {
+    margin-bottom: 2%;
+  }
+  input {
+    border-radius: 5px;
+    padding: 1.5%;
+  }
+  input:required:valid,{
+    border-left-color: rgba(23, 150, 17, 0.6);
+  }
+  input:invalid{
+   border-left-color: rgba(255,0,0, 0.6);
+  }
+  input:focus,{
+    border-color: rgba(44,44,44,0.6);
+    outline-style: none;
+    box-shadow: none;
+  }
+  input:invalid:focus, {
+    border-left-color: rgba(255, 0, 0, 0.6);
+    outline-style: none;
+    box-shadow: none;
+  }
+
+}
+
+#consent-prompt {
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+}
+
+#signature {
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+  #signature-buttons {
+    margin-top: 1.5vh;
+    button {
+      min-width: 30%;
+    }
+
+  }
+
+  #signature-prompt {
+    opacity: 0.8;
+    font-size: 75%;
+    padding-bottom: 7px;
+    font-style: italic;
+  }
+
+  .signature {
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+}
+
+#submit {
+  text-align: center;
+  padding-top: 7vh;
+  padding-bottom: 6vh;
+  button {
+    min-width: 75%;
+  }
+
+}
+
+#message {
+  text-align: center;
+  margin-top: 4vh;
+  #download {
+    margin-top: 4vh;
+  }
+  #interview-prompt {
+    a {
+      font-weight: bold;
+      font-size: 105%;
+      color: $fty-orange;
+      &:hover {
+        color: $fty-teal;
+      }
+    }
+  }
+}
+
+#email-check {
+  padding-top: 1.5vh
+}
+
+/*media queries*/
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #logo {
+    img {
+      max-width: 50%;
+    }
+
+  }
+  .dot-sep {
+    img {
+      max-height: 3.5vh;
+      width: auto;
+    }
+
+  }
+  #institutions{
+      display: flex;
+      justify-content: space-between;
+
+      .school-logo {
+        img {
+         max-width: 12vw;
+         max-height: 12vw;
+       }
+      }
+    }
+
+   #signature #signature-buttons button {
+     min-width: 10%;
+   }
+
+    #submit {
+      button {
+        min-width: 25vw;
+      }
+    }
+
+    #consent-item {
+      padding-bottom: 2.5vh;
+    }
+
+    button {
+      padding: 1%;
+    }
+
+    #email-check {
+      padding-top: 3vh;
+    }
+
+    input {
+      padding: 0.5% !important;
+    }
+
+    #loading-overlay {
+      .fa-spinner {
+        margin-top: 20%;
+      }
+    }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #view-content {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  #preamble {
+    font-size: 110%;
+  }
+
+  #roles, #study-id {
+    font-size: 100%;
+  }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

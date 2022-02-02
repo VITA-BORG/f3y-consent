@@ -1,0 +1,3 @@
+/backend/.env*
+/frontend/js/env.js
+frontend/style/.sass-cache/*
