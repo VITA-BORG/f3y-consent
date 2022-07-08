@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="f3y-consent" ng-controller="ctrl">
+<html ng-app="online-consent" ng-controller="ctrl">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link  rel="shortcut icon" href="" />
@@ -35,9 +35,9 @@
   </head>
   <body>
     <div id="view-content" class="col-md-12 col-sm-12 col-lg-10 offset-lg-1 container-fluid">
-      <div id="logo"><img src="./style/images/f3y_logo.png"/></div>
-      <div ng-if="!model.complete" ng-include="'./views/form.html'"></div>
-      <div ng-if="model.complete" ng-include="'./views/confirm.html'"></div>
+      <div id="logo" ng-if="model.config.header.logo.img && model.config.header.logo.img.length >0"><a href="{{model.config.header.logo.link}}" target="_blank"><img ng-src="model.config.header.logo.img"/></a></div>
+      <div ng-if="(!model.complete) || !model.config.confirm" ng-include="'./views/form.html'"></div>
+      <div ng-if="model.complete" ng-include="model.config.confirm"></div>
     </div>
     <div id="loading-overlay" ng-if="model.inProgress">
       <i class="fas fa-spinner fa-pulse"></i>

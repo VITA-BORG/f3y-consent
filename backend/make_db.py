@@ -8,13 +8,17 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from psycopg2.extensions import AsIs
 import os
 import datetime
+import json
 
 load_dotenv()
+
+#load the config file
+config = json.load(open("config.json"))
 
 
 def connect():
   #grab the environment variables
-  db = os.environ.get("DB_NAME")
+  db = config["database"]
   user = os.environ.get("DB_USER")
   pwd = os.environ.get("DB_PASSWORD")
   host = os.environ.get("DB_HOST")
@@ -41,25 +45,22 @@ def main():
     #obviousle terrible practice
     cur.execute("DROP TABLE IF EXISTS consent_forms CASCADE;")
 
-    cur.execute("""create table consent_forms (
-        id serial primary key,
-        redcap_id int,
-        email varchar(256),
-        consent_recording boolean,
-        consent_surveys boolean,
-        consent_twitter boolean,
-        consent_linkedin boolean,
-        consent_cv boolean,
-        consent_quotations boolean,
-        consent_email boolean,
-        typed_consent varchar(512),
-        signature_consent text,
-        submitted_at timestamp
-    )""")
+    #make the string
+    #probably could be more efficient with some kind of buffer but anyway
+    q = "create table consent_forms (id serial primary key,"
+
+    if(config["redcap"]["enabled"]):
+        q += "redcap_id int,"
+
+    for elem in config["db_fields"]:
+        q += "{} {},".format(elem["name"], elem["type"])
+
+    q += "email varchar(256), submitted_at timestamp)"
+    cur.execute(q)
 
     con.commit()
 
-    path = os.environ.get("DATA_BASE_URL") + "/no_id_forms"
+    path = config["files"]["base_location"] + "/no_id_forms"
     if(not os.path.exists(path)):
         os.mkdir(path)
 

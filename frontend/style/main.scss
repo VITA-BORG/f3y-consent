@@ -9,17 +9,17 @@ $orange-lighter: #e9b8aa;
 html, body {
   height: 100%;
   width: 100%;
-  font-family: $body-font;
+  //font-family: $body-font;
   overflow-x: hidden;
-  background-color:$fty-teal;
+  //background-color:$fty-teal;
 }
 
 #loading-overlay {
   z-index: 999;
-  background-color: #e6e6e6;
+  //background-color: #e6e6e6;
   height: 100%;
   width: 100%;
-  color: $fty-orange;
+  //color: $fty-orange;
   text-align: center;
   transition: all 0.2s fade;
   .fa-spinner {
@@ -32,15 +32,13 @@ html, body {
 }
 
 button {
-  font-family: $heading-font;
+  //font-family: $heading-font;
   padding: 2% 3% 2% 3%;
-  background-color: $fty-orange;
+  //background-color: $fty-orange;
   border: 0px;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: $orange-lighter;
-  }
+
   &:disabled {
     pointer-events: none;
     opacity: 0.75;
@@ -50,13 +48,17 @@ button {
 
 
 #view-content {
-    background-color: #e6e6e6;
+    //background-color: #e6e6e6;
     min-height: 100%;
+}
+
+#header {
+  padding-top: 3vh;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $heading-font;
+  //font-family: $heading-font;
   font-weight: bold;
 }
 
@@ -66,12 +68,14 @@ label {
 
 
 #preamble {
-  font-family: $heading-font;
+  //font-family: $heading-font;
   text-align: center;
   font-weight: bold;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
 }
 
-#logo, .dot-sep {
+#logo{
 
   text-align: center;
   padding-top: 1vh;
@@ -81,23 +85,15 @@ label {
   }
 }
 
-.dot-sep {
-  padding-top: 3vh;
-  padding-bottom: 3vh;
-  text-align: center;
-  img {
-    width: 50%;
-  }
-}
 
-#institutions {
+#partners {
   width: 100%;
   text-align: center;
   margin: auto;
   padding-top: 3vh;
   padding-bottom: 3vh;
 
-  .school-logo {
+  .p-logo {
     display: inline-block;
     margin-left: 2.5%;
     margin-right: 2.5%;
@@ -123,34 +119,10 @@ label {
   padding-bottom: 3vh;
 }
 
-#study-id {
-  padding-bottom: 1vh;
-  font-size: 75%;
-
-  label {
-    padding-right: 4%;
-  }
-
-  #f3y-details {
-    display: inline-block;
-    padding-top: 3vh;
-  }
-
-}
-
-
-#form-title {
-  font-family: $heading-font;
-  font-weight: bold;
-  font-size: 125%;
-  text-align: center;
-  margin-top: 4vh;
-  margin-bottom: 5vh;;
-}
 
 .form-section {
   .section-title {
-    font-family: $heading-font;
+    //font-family: $heading-font;
     font-weight: bold;
     font-size: 110%;
     padding-bottom: 2vh;
@@ -172,7 +144,7 @@ label {
   }
 }
 
-.form-content input, .form-content textarea {
+.form-content input, .form-content canvas {
   margin: 0 .25rem;
   min-width: 125px;
   border: none;
@@ -188,11 +160,17 @@ label {
   .form-item {
     margin-bottom: 2%;
   }
-  input {
+  input, canvas {
     border-radius: 5px;
     padding: 1.5%;
+    border-right: 2px solid #e8e8e8;
+    border-top: 2px solid #e8e8e8;
+    border-bottom: 2px solid #e8e8e8;
   }
-  input:required:valid,{
+  canvas {
+    border-left: 2px solid #e8e8e8;
+  }
+  input:required:valid{
     border-left-color: rgba(23, 150, 17, 0.6);
   }
   input:invalid{
@@ -211,15 +189,11 @@ label {
 
 }
 
-#consent-prompt {
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-}
 
-#signature {
+.signature {
   margin-top: 4vh;
   margin-bottom: 4vh;
-  #signature-buttons {
+  .signature-buttons {
     margin-top: 1.5vh;
     button {
       min-width: 30%;
@@ -227,16 +201,23 @@ label {
 
   }
 
-  #signature-prompt {
+  .signature-prompt {
     opacity: 0.8;
     font-size: 75%;
     padding-bottom: 7px;
     font-style: italic;
   }
 
-  .signature {
+  .signature-input {
     background-color: #fff;
     border-radius: 5px;
+  }
+
+}
+
+#email-check {
+  input {
+    min-width: 0px;
   }
 
 }
@@ -248,30 +229,8 @@ label {
   button {
     min-width: 75%;
   }
-
 }
 
-#message {
-  text-align: center;
-  margin-top: 4vh;
-  #download {
-    margin-top: 4vh;
-  }
-  #interview-prompt {
-    a {
-      font-weight: bold;
-      font-size: 105%;
-      color: $fty-orange;
-      &:hover {
-        color: $fty-teal;
-      }
-    }
-  }
-}
-
-#email-check {
-  padding-top: 1.5vh
-}
 
 /*media queries*/
 /* Extra small devices (phones, 600px and down) */
@@ -289,18 +248,10 @@ label {
     }
 
   }
-  .dot-sep {
-    img {
-      max-height: 3.5vh;
-      width: auto;
-    }
 
-  }
-  #institutions{
-      display: flex;
+  #partners{
       justify-content: space-between;
-
-      .school-logo {
+      .p-logo {
         img {
          max-width: 12vw;
          max-height: 12vw;
@@ -308,7 +259,7 @@ label {
       }
     }
 
-   #signature #signature-buttons button {
+   .signature-buttons button {
      min-width: 10%;
    }
 
@@ -326,9 +277,6 @@ label {
       padding: 1%;
     }
 
-    #email-check {
-      padding-top: 3vh;
-    }
 
     input {
       padding: 0.5% !important;
@@ -353,7 +301,7 @@ label {
     font-size: 110%;
   }
 
-  #roles, #study-id {
+  #roles {
     font-size: 100%;
   }
 

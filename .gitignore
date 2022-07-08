@@ -1,3 +1,9 @@
 /backend/.env*
 /frontend/js/env.js
-frontend/style/.sass-cache/*
+/frontend/style/.sass-cache/*
+/frontend/style/images/
+/backend/config.json
+/backend/templates/*.pdf
+/backend/templates/study_sig.png
+/frontend/views/body.html
+/frontend/views/confirm.html

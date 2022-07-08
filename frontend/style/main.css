@@ -3,16 +3,12 @@
 html, body {
   height: 100%;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
-  overflow-x: hidden;
-  background-color: #41b3a3; }
+  overflow-x: hidden; }
 
 #loading-overlay {
   z-index: 999;
-  background-color: #e6e6e6;
   height: 100%;
   width: 100%;
-  color: #e27d60;
   text-align: center;
   transition: all 0.2s fade;
   position: absolute;
@@ -23,60 +19,51 @@ html, body {
     margin-top: 45%; }
 
 button {
-  font-family: "Montserrat", sans-serif;
   padding: 2% 3% 2% 3%;
-  background-color: #e27d60;
   border: 0px;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
   font-weight: bold; }
-  button:hover {
-    background-color: #e9b8aa; }
   button:disabled {
     pointer-events: none;
     opacity: 0.75; }
 
 #view-content {
-  background-color: #e6e6e6;
   min-height: 100%; }
 
+#header {
+  padding-top: 3vh; }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Montserrat", sans-serif;
   font-weight: bold; }
 
 label {
   font-weight: bold; }
 
 #preamble {
-  font-family: "Montserrat", sans-serif;
   text-align: center;
-  font-weight: bold; }
+  font-weight: bold;
+  margin-top: 4vh;
+  margin-bottom: 4vh; }
 
-#logo, .dot-sep {
+#logo {
   text-align: center;
   padding-top: 1vh; }
-  #logo img, .dot-sep img {
+  #logo img {
     max-width: 90%;
     height: auto; }
 
-.dot-sep {
-  padding-top: 3vh;
-  padding-bottom: 3vh;
-  text-align: center; }
-  .dot-sep img {
-    width: 50%; }
-
-#institutions {
+#partners {
   width: 100%;
   text-align: center;
   margin: auto;
   padding-top: 3vh;
   padding-bottom: 3vh; }
-  #institutions .school-logo {
+  #partners .p-logo {
     display: inline-block;
     margin-left: 2.5%;
     margin-right: 2.5%; }
-    #institutions .school-logo img {
+    #partners .p-logo img {
       max-width: 130px;
       max-height: 130px; }
 
@@ -87,25 +74,7 @@ label {
     font-weight: bold;
     display: inline-block; }
 
-#study-id {
-  padding-bottom: 1vh;
-  font-size: 75%; }
-  #study-id label {
-    padding-right: 4%; }
-  #study-id #f3y-details {
-    display: inline-block;
-    padding-top: 3vh; }
-
-#form-title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: bold;
-  font-size: 125%;
-  text-align: center;
-  margin-top: 4vh;
-  margin-bottom: 5vh; }
-
 .form-section .section-title {
-  font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 110%;
   padding-bottom: 2vh;
@@ -122,7 +91,7 @@ label {
   .consent-item .consent-prompt {
     padding-bottom: 1.5%; }
 
-.form-content input, .form-content textarea {
+.form-content input, .form-content canvas {
   margin: 0 .25rem;
   min-width: 125px;
   border: none;
@@ -134,9 +103,14 @@ label {
 
 .form-content .form-item {
   margin-bottom: 2%; }
-.form-content input {
+.form-content input, .form-content canvas {
   border-radius: 5px;
-  padding: 1.5%; }
+  padding: 1.5%;
+  border-right: 2px solid #e8e8e8;
+  border-top: 2px solid #e8e8e8;
+  border-bottom: 2px solid #e8e8e8; }
+.form-content canvas {
+  border-left: 2px solid #e8e8e8; }
 .form-content input:required:valid {
   border-left-color: rgba(23, 150, 17, 0.6); }
 .form-content input:invalid {
@@ -150,25 +124,24 @@ label {
   outline-style: none;
   box-shadow: none; }
 
-#consent-prompt {
+.signature {
   margin-top: 4vh;
   margin-bottom: 4vh; }
-
-#signature {
-  margin-top: 4vh;
-  margin-bottom: 4vh; }
-  #signature #signature-buttons {
+  .signature .signature-buttons {
     margin-top: 1.5vh; }
-    #signature #signature-buttons button {
+    .signature .signature-buttons button {
       min-width: 30%; }
-  #signature #signature-prompt {
+  .signature .signature-prompt {
     opacity: 0.8;
     font-size: 75%;
     padding-bottom: 7px;
     font-style: italic; }
-  #signature .signature {
+  .signature .signature-input {
     background-color: #fff;
     border-radius: 5px; }
+
+#email-check input {
+  min-width: 0px; }
 
 #submit {
   text-align: center;
@@ -176,21 +149,6 @@ label {
   padding-bottom: 6vh; }
   #submit button {
     min-width: 75%; }
-
-#message {
-  text-align: center;
-  margin-top: 4vh; }
-  #message #download {
-    margin-top: 4vh; }
-  #message #interview-prompt a {
-    font-weight: bold;
-    font-size: 105%;
-    color: #e27d60; }
-    #message #interview-prompt a:hover {
-      color: #41b3a3; }
-
-#email-check {
-  padding-top: 1.5vh; }
 
 /*media queries*/
 /* Extra small devices (phones, 600px and down) */
@@ -200,18 +158,13 @@ label {
   #logo img {
     max-width: 50%; }
 
-  .dot-sep img {
-    max-height: 3.5vh;
-    width: auto; }
-
-  #institutions {
-    display: flex;
+  #partners {
     justify-content: space-between; }
-    #institutions .school-logo img {
+    #partners .p-logo img {
       max-width: 12vw;
       max-height: 12vw; }
 
-  #signature #signature-buttons button {
+  .signature-buttons button {
     min-width: 10%; }
 
   #submit button {
@@ -222,9 +175,6 @@ label {
 
   button {
     padding: 1%; }
-
-  #email-check {
-    padding-top: 3vh; }
 
   input {
     padding: 0.5% !important; }
@@ -240,7 +190,7 @@ label {
   #preamble {
     font-size: 110%; }
 
-  #roles, #study-id {
+  #roles {
     font-size: 100%; } }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 
