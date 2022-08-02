@@ -186,7 +186,7 @@ The example uses relative paths. Absolute ones are fine too.
 ```
 
 
-# Example body HTML
+#### Example body HTML
 
 HTML markup is simple and very forgiving.
 If you need to check syntax, check out the [W3S tutorials](https://www.w3schools.com/html/).

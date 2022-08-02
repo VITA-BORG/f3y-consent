@@ -240,7 +240,6 @@ app.controller('ctrl', function($scope, apiService, $window, $document, $uibModa
 //for interacting with an api
 //this could (should) probably live in its own file...
 app.service('apiService', function($http, $q) {
-  console.log(__env.apiUrl)
   return ({
    validate: validate,
    sendData: sendData
