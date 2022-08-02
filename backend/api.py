@@ -224,7 +224,7 @@ def buildPdf(info, prefix, path):
 def sendEmail(email, path):
     try:
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
-        server.login(sender, os.environ.get("SENDER_PASSWORD"))
+        server.login(sender, config["email"]["sender_password"] )
     except Exception as e:
         #deal with errors on api boot up
         #not stellar error handling, but passable
