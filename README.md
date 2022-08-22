@@ -6,7 +6,7 @@ The functionality relies on not-exactly-trivial user supplied configuration, but
 In brief, for a custom instance, you'll need to supply:
 
 * A backend configuration file **config.json** -> it needs to go in the **backend/** directory
-* A blank pdf version of the consent file -> location specific in backend config
+* A blank pdf version of the consent file -> location specified in backend config
 * A front end configuration file **env.js** -> it needs to go in the **frontend/js** directory
 * An HTML template of just the body text of the consent form (not anything that needs to be filled in) -> location specified in frontend configuration file
 * Any images that need to appear on the webform (such as logos) or in the pdf (such as study personnel signatures)  (optional) -> locations specified in configuration files
@@ -20,11 +20,11 @@ The way that the form currently works is that if the participant chooses not not
 
 #### Example backend configuration
 
-Email supplied has to be gmail, and the settings need to have been changed to open up the authentication.
-There are four form field types: text, current_date, signature, and checkbox.
+Email supplied has to be gmail, and the settings need to have been changed to [open up the authentication](https://hotter.io/docs/email-accounts/secure-app-gmail/).  
+There are four form field types: text, current_date, signature, and checkbox.  
 'Type' fields in the db_fields section need to match up with postgres data types.
-You can have more form fields than database fields (so that it it possible to only save unique/important values).
-Set redcap to enabled with the appropriate token/link if the consent forms will correspond to participants in a recap project.
+You can have more form fields than database fields (so that it it possible to only save unique/important values).  
+Set redcap to enabled with the appropriate token/link if the consent forms will correspond to participants in a redcap project.  
 
 ```
 {
@@ -127,11 +127,11 @@ Set redcap to enabled with the appropriate token/link if the consent forms will 
 
 #### Example frontend configuration
 
-You must include the trailing slash in the api url.
-Background colour is the form background, primary colour is for the form gutters, secondary colour is for the buttons and such.
-You don't have to supply contact info for every person.
-You do not have to supply a project logo.
-The example uses relative paths. Absolute ones are fine too.
+You must include the trailing slash in the api url.  
+Background colour is the form background, primary colour is for the form gutters, secondary colour is for the buttons and such.  
+You don't have to supply contact info for every person.  
+You do not have to supply a project logo.  
+The example uses relative paths. Absolute ones are fine too.  
 
 ```
 //frontend config
@@ -188,9 +188,9 @@ The example uses relative paths. Absolute ones are fine too.
 
 #### Example body HTML
 
-HTML markup is simple and very forgiving.
-If you need to check syntax, check out the [W3S tutorials](https://www.w3schools.com/html/).
-Any specific styling beyond fonts and colours needs to be done inline in the template.
+HTML markup is simple and very forgiving.  
+If you need to check syntax, check out the [W3S tutorials](https://www.w3schools.com/html/).  
+Any specific styling beyond fonts and colours needs to be done inline in the template.  
 
 ```
 <style>
