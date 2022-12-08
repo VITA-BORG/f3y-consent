@@ -1,3 +1,8 @@
-/backend/.env*
-/frontend/js/env.js
+backend/.env*
+frontend/js/env.js
 frontend/style/.sass-cache/*
+backend/templates/study_sig.png
+backend/templates/sop2_interview_consent.pdf
+backend/config.json
+frontend/style/images/hevga.png
+frontend/views/body.html

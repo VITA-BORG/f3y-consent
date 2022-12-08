@@ -44,8 +44,7 @@ cur = con.cursor()
 rc_api_url = os.environ.get("REDCAP_API_URL")
 rc_api_key = os.environ.get("REDCAP_API_TOKEN")
 rc_project = redcap.Project(rc_api_url, rc_api_key)
-location_maps = {"recording": {'true': {'x':155, 'y':629}, 'false':{'x':227, 'y':629}}, "surveys": {'true': {'x':155, 'y':661}, 'false':{'x':227, 'y':661}}, "twitter": {'true': {'x':155, 'y':177}, 'false':{'x':227, 'y':177}, 'null': {'x':300, 'y':177}}, 'linkedin':{'true': {'x':155, 'y':227}, 'false':{'x':227, 'y':227}, 'null': {'x':300, 'y':227}}, 'cv':{'true': {'x':155, 'y':263}, 'false':{'x':227, 'y':263}}, 'quotations':{'true': {'x':155, 'y': 313}, 'false':{'x':227, 'y':313}}, 'email':{'true': {'x':155, 'y':361}, 'false':{'x':227, 'y':361}}, 'name':{'x':155, 'y':515}, 'signature':{'x': 155, 'y':557} }
-
+location_maps = {"recording": {'true': {'x':155, 'y':354}, 'false':{'x':227, 'y':354}}, "surveys": {'true': {'x':155, 'y':387}, 'false':{'x':227, 'y':387}}, "twitter": {'true': {'x':155, 'y':436}, 'false':{'x':227, 'y':437}, 'null': {'x':298, 'y':437}}, 'linkedin':{'true': {'x':155, 'y':488}, 'false':{'x':227, 'y':488}, 'null': {'x':298, 'y':488}}, 'artstation':{'true': {'x':155, 'y':540}, 'false':{'x':227, 'y':540}, 'null': {'x':298, 'y':540}}, 'cv':{'true': {'x':155, 'y':574}, 'false':{'x':227, 'y':574}}, 'quotations':{'true': {'x':155, 'y': 621}, 'false':{'x':227, 'y':621}}, 'email':{'true': {'x':155, 'y':664}, 'false':{'x':227, 'y':664}}, 'name':{'x':145, 'y':280}, 'signature':{'x': 150, 'y':305} }
 
 sender = os.environ.get("SENDER_EMAIL")
 #set up email server
@@ -93,7 +92,7 @@ def submit():
     #fetch the redcap id
     redcap_id = getRedcapId(data["contact"]["email"])
     #add an entry to the database
-    cur.execute("insert into consent_forms(redcap_id, email, consent_recording, consent_surveys, consent_twitter, consent_linkedin, consent_cv, consent_quotations, consent_email, typed_consent, signature_consent, submitted_at) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )" , (redcap_id, data["contact"]["email"], map_bool(data["consent"]["recording"]),  map_bool(data["consent"]["surveys"]),  map_bool(data["consent"]["twitter"]),  map_bool(data["consent"]["linkedin"]),  map_bool(data["consent"]["cv"]),  map_bool(data["consent"]["quotations"]),  map_bool(data["consent"]["email"]), data["consent"].get("typed"), data["consent"].get("signature"), datetime.now() ))
+    cur.execute("insert into consent_forms(redcap_id, email, consent_recording, consent_surveys, consent_twitter, consent_linkedin, consent_cv, consent_artstation, consent_quotations, consent_email, typed_consent, signature_consent, submitted_at) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )" , (redcap_id, data["contact"]["email"], map_bool(data["consent"]["recording"]),  map_bool(data["consent"]["surveys"]),  map_bool(data["consent"]["twitter"]),  map_bool(data["consent"]["linkedin"]), map_bool(data["consent"]["artstation"]), map_bool(data["consent"]["cv"]),  map_bool(data["consent"]["quotations"]),  map_bool(data["consent"]["email"]), data["consent"].get("typed"), data["consent"].get("signature"), datetime.now() ))
     con.commit()
     #construct the pdf
 
@@ -142,18 +141,15 @@ def buildPdf(info, prefix, path):
     #fill in all the boxes
     #this is going to be shittily hardcoded, but what can you do
     #can't loop (really) b/c of pagebreak
-    page = doc.load_page(5)
+    page = doc.load_page(4)
     page.cleanContents()
-    for key in ['recording', 'surveys']:
+    for key in ['recording', 'surveys', 'twitter', 'linkedin', 'artstation', 'cv', 'quotations', 'email']:
+        print(key)
         coords = location_maps[key][info[key]]
         rect = fitz.Rect(coords['x'], coords['y'], coords['x']+15, coords['y']+15)
         page.insert_image(rect, filename = "./templates/checkmark.png")
-    page = doc.load_page(6)
+    page = doc.load_page(5)
     page.cleanContents()
-    for key in ['twitter', 'linkedin','cv', 'quotations', 'email']:
-        coords = location_maps[key][info[key]]
-        rect = rect = fitz.Rect(coords['x'], coords['y'], coords['x']+15, coords['y']+15)
-        page.insert_image(rect, filename = "./templates/checkmark.png")
     #add the name
     text_lenght = fitz.getTextlength(typed, fontname="Helvetica", fontsize=18)
     coords = location_maps["name"]
