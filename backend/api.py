@@ -96,7 +96,7 @@ def submit():
     con.commit()
     #construct the pdf
 
-    prefix = str(redcap_id) if redcap_id is not None else data["contact"]["email"].split("@")[0].replace(".", '')
+    prefix = 'RC'+str(redcap_id) if redcap_id is not None else data["contact"]["email"].split("@")[0].replace(".", '')
     path = base_url + ("/{}".format(str(redcap_id)) if redcap_id is not None else "/no_id_forms")
 
     if redcap_id is not None:
