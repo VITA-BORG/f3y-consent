@@ -82,7 +82,7 @@ app.controller('ctrl', function($scope, apiService, $window, $document, $uibModa
      data = {
        consent: $scope.model.consent,
        contact: $scope.model.contact,
-       sendEmail: false//true
+       sendEmail: true
      }
 
      //validate email, add toast if invalid
