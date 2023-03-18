@@ -28,6 +28,8 @@
     <!--toastr-->
     <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
+    <!--scrolling-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.2/angular-scroll.min.js" integrity="sha512-1wYZXYWckZINGwEcMIjYjthjBO7w0vgbj4tqREKmbIj4Wy+v1GNcbi2A3Bh1OEHG9caYQg8mNtN89Btj9xubNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--custom-->
     <script src="js/env.js"></script>
     <script src = "js/main.js"></script>
@@ -35,10 +37,10 @@
     <title>The First Three Years - full study consent</title>
   </head>
   <body>
-    <div id="view-content" class="col-md-12 col-sm-12 col-lg-10 offset-lg-1 container-fluid">
+    <div id="view-content" class="col-md-12 col-sm-12 col-lg-10 offset-lg-1 container-fluid" du-scroll-container>
       <div id="logo"><img src="./style/images/f3y_logo.png"/></div>
-      <div ng-if="!model.complete" ng-include="'./views/form.html'"></div>
-      <div ng-if="model.complete" ng-include="'./views/confirm.html'"></div>
+      <!--div ng-if="!model.complete" ng-include="'./views/form.html'"></div-->
+      <div ng-include="'./views/form.html'"></div>
     </div>
     <div id="loading-overlay" ng-if="model.inProgress">
       <i class="fas fa-spinner fa-pulse"></i>

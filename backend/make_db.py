@@ -49,6 +49,7 @@ def main():
         consent_surveys boolean,
         consent_twitter boolean,
         consent_linkedin boolean,
+        consent_artstation boolean,
         consent_cv boolean,
         consent_quotations boolean,
         consent_email boolean,
@@ -59,8 +60,8 @@ def main():
 
     con.commit()
 
-    path = os.environ.get("DATA_BASE_URL") + "/no_id_forms"
-    if(not os.path.exists(path)):
-        os.mkdir(path)
+    #path = os.environ.get("DATA_BASE_URL") + "/no_id_forms"
+    #if(not os.path.exists(path)):
+        #os.mkdir(path)
 
 main()

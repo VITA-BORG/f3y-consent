@@ -40,7 +40,8 @@ app.config(function(toastrConfig) {
 
 
 
-app.controller('ctrl', function($scope, apiService, $window, $document, $uibModal, $location, $anchorScroll, $sce, $timeout, toastr) {
+app.controller('ctrl', function($scope, apiService, $window, $document, $uibModal, $location,  $sce, $timeout, toastr) {
+
   $scope.model = {
     institutions:[
       {logo:"./style/images/alberta.png", link:"https://www.ualberta.ca/index.html"},
@@ -70,7 +71,7 @@ app.controller('ctrl', function($scope, apiService, $window, $document, $uibModa
 
    //there is surely a bettre way to do this, but this works
    $scope.submit_disabled = function(){
-     return ($scope.model.istouch && !$scope.model.signature) || (!$scope.model.istouch && (!$scope.model.consent.typed ||$scope.model.consent.typed.length==0 )) || $scope.model.consent.recording == undefined || $scope.model.consent.surveys == undefined || $scope.model.consent.twitter == undefined || $scope.model.consent.linkedin == undefined || $scope.model.consent.cv == undefined || $scope.model.consent.quotations == undefined || $scope.model.consent.email == undefined  ||  $scope.model.contact.email==undefined || $scope.model.contact.email.length==0 || $scope.model.inProgress || !$scope.model.signature;
+     return $scope.model.inProgress || ($scope.model.istouch && !$scope.model.signature) || (!$scope.model.istouch && (!$scope.model.consent.typed ||$scope.model.consent.typed.length==0 )) || $scope.model.consent.recording == undefined || $scope.model.consent.surveys == undefined || $scope.model.consent.twitter == undefined || $scope.model.consent.linkedin == undefined || $scope.model.consent.cv == undefined || $scope.model.consent.quotations == undefined || $scope.model.consent.email == undefined  || $scope.model.contact==undefined || $scope.model.contact.email==undefined || !$scope.model.contact.email || $scope.model.contact.email.length==0 || $scope.model.inProgress || !$scope.model.signature;
    }
 
    $scope.submit = function() {
@@ -81,7 +82,7 @@ app.controller('ctrl', function($scope, apiService, $window, $document, $uibModa
      data = {
        consent: $scope.model.consent,
        contact: $scope.model.contact,
-       sendEmail: $scope.model.sendemail
+       sendEmail: false//true
      }
 
      //validate email, add toast if invalid
@@ -102,7 +103,23 @@ app.controller('ctrl', function($scope, apiService, $window, $document, $uibModa
            //navigate to confirmation page
            $scope.model.complete = true
            //$location.path('confirm')
+           $scope.model.consent = {}
+           $scope.model.contact = {}
+           $scope.model.signature=null
+           //this is sucha hack
+           //bit directive scopes are fiddly
+
+           $timeout(function(){
+             z=$("#signature-clear")
+             z.click();
+           })
+
+
+            $('body').scrollTop(0);
             $scope.model.inProgress = false
+            $timeout(function(){
+              toastr.success("Sumbission complete!");
+            }, 100)
          })
        }
 

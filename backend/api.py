@@ -13,6 +13,7 @@ import psycopg2
 import redcap
 from datetime import datetime
 import base64
+import hashlib
 
 #for pdf editing
 import fitz
@@ -41,10 +42,7 @@ host = os.environ.get("DB_HOST")
 base_url = os.environ.get("DATA_BASE_URL")
 con =psycopg2.connect(dbname=name, user=user, password=pwd, host=host)
 cur = con.cursor()
-rc_api_url = os.environ.get("REDCAP_API_URL")
-rc_api_key = os.environ.get("REDCAP_API_TOKEN")
-rc_project = redcap.Project(rc_api_url, rc_api_key)
-location_maps = {"recording": {'true': {'x':155, 'y':354}, 'false':{'x':227, 'y':354}}, "surveys": {'true': {'x':155, 'y':387}, 'false':{'x':227, 'y':387}}, "twitter": {'true': {'x':155, 'y':436}, 'false':{'x':227, 'y':437}, 'null': {'x':298, 'y':437}}, 'linkedin':{'true': {'x':155, 'y':488}, 'false':{'x':227, 'y':488}, 'null': {'x':298, 'y':488}}, 'artstation':{'true': {'x':155, 'y':540}, 'false':{'x':227, 'y':540}, 'null': {'x':298, 'y':540}}, 'cv':{'true': {'x':155, 'y':574}, 'false':{'x':227, 'y':574}}, 'quotations':{'true': {'x':155, 'y': 621}, 'false':{'x':227, 'y':621}}, 'email':{'true': {'x':155, 'y':664}, 'false':{'x':227, 'y':664}}, 'name':{'x':145, 'y':280}, 'signature':{'x': 150, 'y':305} }
+location_maps = {"recording": {'true': {'x':155, 'y':428}, 'false':{'x':191, 'y':428}}, "surveys": {'true': {'x':155, 'y':461}, 'false':{'x':191, 'y':461}}, "twitter": {'true': {'x':153, 'y':514}, 'false':{'x':189, 'y':514}, 'null': {'x':218, 'y':514}}, 'linkedin':{'true': {'x':155, 'y':568}, 'false':{'x':189, 'y':568}, 'null': {'x':218, 'y':568}}, 'artstation':{'true': {'x':152, 'y':624}, 'false':{'x':186, 'y':624}, 'null': {'x':215, 'y':624}}, 'cv':{'true': {'x':155, 'y':659}, 'false':{'x':191, 'y':659}}, 'quotations':{'true': {'x':155, 'y': 117}, 'false':{'x':191, 'y':117}}, 'email':{'true': {'x':155, 'y':168}, 'false':{'x':191, 'y':168}}, 'name':{'x':145, 'y':348}, 'signature':{'x': 150, 'y':388} }
 
 sender = os.environ.get("SENDER_EMAIL")
 #set up email server
@@ -89,19 +87,16 @@ def submit():
 
     except:
         return  Response("Validation error",status=500)
-    #fetch the redcap id
-    redcap_id = getRedcapId(data["contact"]["email"])
+
     #add an entry to the database
-    cur.execute("insert into consent_forms(redcap_id, email, consent_recording, consent_surveys, consent_twitter, consent_linkedin, consent_cv, consent_artstation, consent_quotations, consent_email, typed_consent, signature_consent, submitted_at) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )" , (redcap_id, data["contact"]["email"], map_bool(data["consent"]["recording"]),  map_bool(data["consent"]["surveys"]),  map_bool(data["consent"]["twitter"]),  map_bool(data["consent"]["linkedin"]), map_bool(data["consent"]["artstation"]), map_bool(data["consent"]["cv"]),  map_bool(data["consent"]["quotations"]),  map_bool(data["consent"]["email"]), data["consent"].get("typed"), data["consent"].get("signature"), datetime.now() ))
+    cur.execute("insert into consent_forms( email, consent_recording, consent_surveys, consent_twitter, consent_linkedin, consent_cv, consent_artstation, consent_quotations, consent_email, typed_consent, signature_consent, submitted_at) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )" , (data["contact"]["email"], map_bool(data["consent"]["recording"]),  map_bool(data["consent"]["surveys"]),  map_bool(data["consent"]["twitter"]),  map_bool(data["consent"]["linkedin"]), map_bool(data["consent"]["artstation"]), map_bool(data["consent"]["cv"]),  map_bool(data["consent"]["quotations"]),  map_bool(data["consent"]["email"]), data["consent"].get("typed"), data["consent"].get("signature"), datetime.now() ))
     con.commit()
     #construct the pdf
 
-    prefix = 'RC'+str(redcap_id) if redcap_id is not None else data["contact"]["email"].split("@")[0].replace(".", '')
-    path = base_url + ("/{}".format(prefix) if redcap_id is not None else "/no_id_forms")
+    #adding hash in case of duplicate names
+    prefix = data["consent"].get("typed").lower().strip().replace(' ', '_') + "_" + hashlib.md5(data["consent"]["email"].encode()).hexdigest()
+    path = base_url + "/"
 
-    if redcap_id is not None:
-        if not os.path.exists(path):
-            os.mkdir(path)
 
     buildPdf(data["consent"], prefix, path)
     #some code duplication ugh
@@ -118,22 +113,14 @@ def submit():
     return  send_file(ret_file, mimetype='application/pdf')
 
 
-#could be slow to fetch every time...but safer
-#string has to match data dictionary
-def getRedcapId(email):
-    participants = rc_project.export_records(fields=['record_id','email_address'])
-    for elem in participants:
-        if elem['email_address']==email:
-            return elem["record_id"]
-    #unnecessary, but for the sake of clarity
-    return None
+#ADD HANDLING FOR DUPLUCATE NAMES
 
 def buildPdf(info, prefix, path):
 
     #load the appropriate template depending on whether or not they have a signature
     sig = info.get("signature")
     typed = info.get("typed")
-    temp = "./templates/F3Y_FullStudyConsent" + (".pdf" if sig is not None else "_NameOnly.pdf" )
+    temp = os.environ.get("TEMPLATE_PATH")
     #put a copy in the current directory to manipulate, move it after
     os.system("cp {} consent.pdf".format(temp))
     #open the correct template
@@ -141,15 +128,15 @@ def buildPdf(info, prefix, path):
     #fill in all the boxes
     #this is going to be shittily hardcoded, but what can you do
     #can't loop (really) b/c of pagebreak
-    page = doc.load_page(4)
+    page = doc.load_page(5)
     page.cleanContents()
     for key in ['recording', 'surveys', 'twitter', 'linkedin', 'artstation', 'cv', 'quotations', 'email']:
-        print(key)
+        if key=='quotations':
+            page = doc.load_page(6)
+            page.cleanContents()
         coords = location_maps[key][info[key]]
         rect = fitz.Rect(coords['x'], coords['y'], coords['x']+15, coords['y']+15)
         page.insert_image(rect, filename = "./templates/checkmark.png")
-    page = doc.load_page(5)
-    page.cleanContents()
     #add the name
     text_lenght = fitz.getTextlength(typed, fontname="Helvetica", fontsize=18)
     coords = location_maps["name"]
@@ -178,6 +165,7 @@ def buildPdf(info, prefix, path):
 
 #lots of code gratefully borrowed from here: https://realpython.com/python-send-email/
 def sendEmail(email, path):
+    #DOESN'T SEEM TO BE WORKING
     try:
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context)
         server.login(sender, os.environ.get("SENDER_PASSWORD"))
